@@ -1,4 +1,4 @@
-package entidade;
+package Entidades;
 
 public class Curso{
 	
@@ -22,8 +22,8 @@ public class Curso{
     }
 
 
-    public String getAno() {
-		return ano;
+    public int getAno() {
+		return this.ano;
 
     }
 
@@ -40,3 +40,4 @@ public class Curso{
     public void setAno(Integer ano) { 
 		this.ano = ano;
 	}
+}

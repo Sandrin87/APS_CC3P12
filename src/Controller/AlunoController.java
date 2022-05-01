@@ -1,5 +1,5 @@
 package Controller;
 
-public interface AlunoController {
+public class AlunoController {
 
 }
