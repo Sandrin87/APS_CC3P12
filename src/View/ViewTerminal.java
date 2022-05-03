@@ -1,12 +1,19 @@
 package View;
 
+import java.util.Collection;
+
 import Controller.Opcao;
 import Entidades.Aluno;
 import Entidades.Curso;
 import Repository.Repository;
 
 public class ViewTerminal implements View{
-
+	
+	private Repository repositorio;
+	
+	public ViewTerminal(Repository repositorioCarregado) {
+		this.repositorio = repositorioCarregado;
+	}
 
 	@Override
 	public Aluno adicionaAluno() {
@@ -34,8 +41,18 @@ public class ViewTerminal implements View{
 
 	@Override
 	public void listarAlunos(Repository repository) {
-		// TODO Auto-generated method stub
+		  /**
+	     * Retorna todos alunos
+	     * alunoCSV precisa ser carregado a partir do database (repository)
+	     * */
 		
+		Collection<Aluno> alunos = repositorio.getAlunos();
+		
+		System.out.println("Todos os alunos cadastrados: ");
+		
+        for(Aluno aluno : alunos) {
+            System.out.println(aluno);
+        }
 	}
 
 	@Override
@@ -46,14 +63,24 @@ public class ViewTerminal implements View{
 
 	@Override
 	public void listarCursosFromAluno(Repository repository, Aluno aluno) {
-		// TODO Auto-generated method stub
+		System.out.println("Todos os cursos do Aluno: "+ aluno.getNome());
+		
+		for(Curso curso : repository.getCursoFromAluno(aluno)) {
+			System.out.println(curso);
+		}
 		
 	}
 
 	@Override
 	public void listarAlunosFromCursos(Repository repository, Curso curso) {
-		// TODO Auto-generated method stub
+		 /**
+	     * Retorna uma lista de alunos que possuem o curso fornecido
+	     * */
+		System.out.println("Todos os alunos do curso: "+curso.getNome());
 		
+		for(Aluno aluno :  repository.getAlunosFromCurso(curso)) {
+			System.out.println(aluno);
+		}
 	}
 
 	@Override
