@@ -46,7 +46,7 @@ public class ViewTerminal implements View{
 	     * alunoCSV precisa ser carregado a partir do database (repository)
 	     * */
 		
-		Collection<Aluno> alunos = repositorio.getAlunos();
+		Collection<Aluno> alunos = repositorio.getAllAlunos();
 		
 		System.out.println("Todos os alunos cadastrados: ");
 		
@@ -57,8 +57,10 @@ public class ViewTerminal implements View{
 
 	@Override
 	public void listarCursos(Repository repository) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Todos os Cursos cadastrados: ");
+		for(Curso curso : repositorio.getAllCursos()){
+			System.out.println(curso);
+		}
 	}
 
 	@Override
