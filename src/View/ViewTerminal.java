@@ -1,8 +1,6 @@
 package View;
 
-import java.util.Collection;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.*;
 
 import Controller.Controller;
 import Controller.Opcao;
@@ -54,26 +52,38 @@ public class ViewTerminal implements View {
 
     @Override
     public Aluno adicionaAluno() {
-        // TODO Auto-generated method stub
-        return null;
+        return addNewAluno();
     }
 
     @Override
     public Curso adicionaCurso() {
-        // TODO Auto-generated method stub
-        return null;
+        return addNewCurso();
     }
 
     @Override
     public Curso getCursoFromLista(Repository repository) {
-        // TODO Auto-generated method stub
-        return null;
+        System.out.println("Escolha um curso");
+        Curso curso = escolherCurso(repository);
+        if (!repository.getCursos().contains(curso)) {
+            System.out.println("Não encontramos um curso com essas informações");
+            return null;
+        }
+        return curso;
     }
 
     @Override
     public Aluno getAlunoFromLista(Repository repository) {
-        // TODO Auto-generated method stub
-        return null;
+        System.out.println("Entre com o id do Aluno: ");
+        listarAlunos(repository);
+        System.out.println("Entre com o id do Aluno: ");
+        String id = getString();
+
+        Aluno aluno = repository.getAlunoFronId(id);
+        if(aluno==null){
+            System.out.println("Não encontramos um aluno com esse id");
+        }
+
+        return aluno;
     }
 
     @Override
@@ -128,24 +138,105 @@ public class ViewTerminal implements View {
 
     }
 
-    public Aluno getNewAluno(){
+    public Aluno addNewAluno() {
         System.out.println("Entre com os dados do aluno: ");
         String id = getIdAluno();
         String nome = getNomeAluno();
         return new Aluno(id, nome);
     }
 
-    private String getNomeAluno() {
+    private String getIdAluno() {
+        System.out.println("Digite o id do aluno: ");
         return getString();
     }
 
-    private String getIdAluno() {
+    private String getNomeAluno() {
+        System.out.println("Digite o nome do aluno: ");
         return getString();
     }
+
+    public Curso addNewCurso() {
+        System.out.println("Entre com os dados do curso: ");
+        String nivel = getNivelCurso();
+        String nome = getNomeCurso();
+        int ano = getAnoCurso();
+        return new Curso(nivel, nome, ano);
+
+    }
+
+    private String getNivelCurso() {
+        System.out.println("Qual o nível do curso: ");
+        return getString();
+    }
+
+    private String getNomeCurso() {
+        System.out.println("Qual o nome do curso: ");
+        return getString();
+    }
+
+    private int getAnoCurso() {
+        System.out.println("Qual o ano do curso: ");
+        return getInt();
+    }
+
     public String getString() {
         Scanner in = new Scanner(System.in);
         String str = in.nextLine();
         return str.trim();
+    }
+
+    private Curso escolherCurso(Repository repository) {
+        String nivel = escolherNivelCurso(repository);
+        String nome = escolherNomeCurso(repository);
+        int ano = escolherAnoCurso(repository);
+        return new Curso(nivel, nome, ano);
+
+    }
+
+    private String escolherNivelCurso(Repository repository) {
+        Set<String> niveis = new TreeSet<>();
+        for(Curso c: repository.getCursos()){
+            niveis.add(c.getNivel());
+        }
+        System.out.println("Escolha um dos níveis: ");
+        for(String nivel: niveis) {
+            System.out.println(nivel);
+        }
+        System.out.println("Digite o nível escolhido: ");
+        return getString();
+    }
+
+    private String escolherNomeCurso(Repository repository) {
+        Set<String> nomes = new TreeSet<>();
+        for(Curso c: repository.getCursos()){
+            nomes.add(c.getNome());
+        }
+        System.out.println("Escolha um dos nomes: ");
+        for(String nome: nomes) {
+            System.out.println(nome);
+        }
+        System.out.println("Digite o nome escolhido: ");
+        return getString();
+
+    }
+
+    private int escolherAnoCurso(Repository repository) {
+        Set<Integer> anos = new TreeSet<>();
+        for(Curso c: repository.getCursos()) {
+            anos.add(c.getAno());
+        }
+        System.out.println("Escolha um dos anos: ");
+        for(int ano: anos) {
+            System.out.println(ano);
+        }
+        System.out.println("Digite o ano escolhido: ");
+        return getInt();
+    }
+
+    public int getInt() {
+        Scanner in = new Scanner(System.in);
+        int inteiro = in.nextInt();
+        return inteiro;
     }
 }
 
