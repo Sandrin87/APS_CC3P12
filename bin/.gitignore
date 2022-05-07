@@ -1,6 +1,8 @@
-/Controller/
-/Repository/
-/Service/
-/Entidades/
+/.classpath
+/.project
 /Arquivos/
+/Controller/
+/Entidades/
 /Main/
+/Repository/
+/View/
