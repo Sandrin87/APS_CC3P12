@@ -18,8 +18,6 @@ public interface View {
 	
 	Aluno adicionaAluno();
 	Curso adicionaCurso();
-
-	void adicionaRelacao(Aluno aluno, Curso curso);
 	
 	Curso getCursoFromLista(Repository repository);
 	Aluno getAlunoFromLista(Repository repository);

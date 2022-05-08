@@ -165,7 +165,7 @@ public class ViewTerminal implements View {
     }
 
     private String getNivelCurso() {
-        System.out.println("Qual o nível do curso: ");
+        System.out.println("Qual o nivel do curso: ");
         return getString();
     }
 
@@ -184,55 +184,7 @@ public class ViewTerminal implements View {
         String str = in.nextLine();
         return str.trim();
     }
-
-    private Curso escolherCurso(Repository repository) {
-        String nivel = escolherNivelCurso(repository);
-        String nome = escolherNomeCurso(repository);
-        int ano = escolherAnoCurso(repository);
-        return new Curso(nivel, nome, ano);
-
-    }
-
-    private String escolherNivelCurso(Repository repository) {
-        Set<String> niveis = new TreeSet<>();
-        for(Curso c: repository.getCursos()){
-            niveis.add(c.getNivel());
-        }
-        System.out.println("Escolha um dos níveis: ");
-        for(String nivel: niveis) {
-            System.out.println(nivel);
-        }
-        System.out.println("Digite o nível escolhido: ");
-        return getString();
-    }
-
-    private String escolherNomeCurso(Repository repository) {
-        Set<String> nomes = new TreeSet<>();
-        for(Curso c: repository.getCursos()){
-            nomes.add(c.getNome());
-        }
-        System.out.println("Escolha um dos nomes: ");
-        for(String nome: nomes) {
-            System.out.println(nome);
-        }
-        System.out.println("Digite o nome escolhido: ");
-        return getString();
-
-    }
-
-    private int escolherAnoCurso(Repository repository) {
-        Set<Integer> anos = new TreeSet<>();
-        for(Curso c: repository.getCursos()) {
-            anos.add(c.getAno());
-        }
-        System.out.println("Escolha um dos anos: ");
-        for(int ano: anos) {
-            System.out.println(ano);
-        }
-        System.out.println("Digite o ano escolhido: ");
-        return getInt();
-    }
-
+    
     public int getInt() {
         Scanner in = new Scanner(System.in);
         int inteiro = in.nextInt();

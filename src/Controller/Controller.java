@@ -45,12 +45,12 @@ public class Controller {
 	}
 
 	private void listarAlunos() {
-		view.listarAlunos(repository);
+		view.listarAlunos(this.repository);
 		
 	}
 
 	private void listarCursos() {
-		view.listarCursos(repository);
+		view.listarCursos(this.repository);
 		
 	}
 
@@ -64,26 +64,26 @@ public class Controller {
 	}
 	
 	private void listarAlunosFromCurso() {
-		Curso curso = view.getCursoFromLista(repository);
+		Curso curso = view.getCursoFromLista(this.repository);
 		if(curso == null)return;		
-		view.listarAlunosFromCursos(repository, null);
+		view.listarAlunosFromCursos(this.repository, null);
 	}
 	
 	private void listarCursoFromAluno() {
-		Aluno aluno = view.getAlunoFromLista(repository);
+		Aluno aluno = view.getAlunoFromLista(this.repository);
 		if(aluno == null) return;
-		view.listarCursosFromAluno(repository, aluno);
+		view.listarCursosFromAluno(this.repository, aluno);
 	}
 	
 	private void adicionaRelacao() {
-		Aluno aluno = view.getAlunoFromLista(repository);
+		Aluno aluno = view.getAlunoFromLista(this.repository);
 		if(aluno == null) return;
-		Curso curso = view.getCursoFromLista(repository);
+		Curso curso = view.getCursoFromLista(this.repository);
 		if(curso == null) return;
-		view.adicionaRelacao(aluno, curso);
+		this.repository.adicionaRelacao(aluno, curso);
 	}
 	
 	private void terminar() {
-		repository.saveCadastro();
+		this.repository.saveCadastro();
 	}
 }
