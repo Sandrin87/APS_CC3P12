@@ -63,7 +63,7 @@ public class ViewTerminal implements View {
     @Override
     public Curso getCursoFromLista(Repository repository) {
         System.out.println("Escolha um curso");
-        Curso curso = escolherCurso(repository);
+        Curso curso = this.escolherCurso(repository);
         if (!repository.getCursos().contains(curso)) {
             System.out.println("Não encontramos um curso com essas informações");
             return null;
@@ -132,12 +132,6 @@ public class ViewTerminal implements View {
         }
     }
 
-    @Override
-    public void adicionaRelacao(Aluno aluno, Curso curso) {
-        // TODO Auto-generated method stub
-
-    }
-
     public Aluno addNewAluno() {
         System.out.println("Entre com os dados do aluno: ");
         String id = getIdAluno();
@@ -165,7 +159,7 @@ public class ViewTerminal implements View {
     }
 
     private String getNivelCurso() {
-        System.out.println("Qual o nivel do curso: ");
+        System.out.println("Qual o nível do curso: ");
         return getString();
     }
 
@@ -176,6 +170,54 @@ public class ViewTerminal implements View {
 
     private int getAnoCurso() {
         System.out.println("Qual o ano do curso: ");
+        return getInt();
+    }
+
+    private Curso escolherCurso(Repository repository) {
+        String nivel = escolherNivelCurso(repository);
+        String nome = escolherNomeCurso(repository);
+        int ano = escolherAnoCurso(repository);
+        return new Curso(nivel, nome, ano);
+
+    }
+
+    private String escolherNivelCurso(Repository repository) {
+        Set<String> niveis = new TreeSet<>();
+        for(Curso c: repository.getCursos()){
+            niveis.add(c.getNivel());
+        }
+        System.out.println("Escolha um dos níveis: ");
+        for(String nivel: niveis) {
+            System.out.println(nivel);
+        }
+        System.out.println("Digite o nível escolhido: ");
+        return getString();
+    }
+
+    private String escolherNomeCurso(Repository repository) {
+        Set<String> nomes = new TreeSet<>();
+        for(Curso c: repository.getCursos()){
+            nomes.add(c.getNome());
+        }
+        System.out.println("Escolha um dos nomes: ");
+        for(String nome: nomes) {
+            System.out.println(nome);
+        }
+        System.out.println("Digite o nome escolhido: ");
+        return getString();
+
+    }
+
+    private int escolherAnoCurso(Repository repository) {
+        Set<Integer> anos = new TreeSet<>();
+        for(Curso c: repository.getCursos()) {
+            anos.add(c.getAno());
+        }
+        System.out.println("Escolha um dos anos: ");
+        for(int ano: anos) {
+            System.out.println(ano);
+        }
+        System.out.println("Digite o ano escolhido: ");
         return getInt();
     }
 
