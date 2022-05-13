@@ -10,13 +10,11 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
-
 import java.util.Set;
 
+import Entidades.Aluno;
 import Entidades.Cadastro;
 import Entidades.Curso;
-import Entidades.Aluno;
-import Controller.Controller;
 
 public class Repository {
 	
@@ -24,7 +22,7 @@ public class Repository {
 	private String cursoPath;
 	private String relacaoPath;
 
-	//csv's est√£o linkados na classe main ent√£o aqui ele s√≥ vai puxar
+	//csv's est„o linkados na classe main entao aqui ele n„o vai puxar
 	
 	private Cadastro cadastrar;
 	
@@ -38,8 +36,8 @@ public class Repository {
 		
         this.cadastrar = new Cadastro();
         
-        loadFuncionarios();
-        loadDepartamentos();
+        loadAlunos();
+        loadCursos();
         
         return loadRelacoes();
     }
@@ -51,20 +49,20 @@ public class Repository {
                 BufferedReader br = new BufferedReader(isr);
             ){
             String linha;
-            int i=0;
             while((linha = br.readLine()) != null){
 
                 String[] palavras = linha.split(",");
 
                 String idAluno = palavras[0];
                 String nome = palavras[1];
-                String ano = palavras[2];
-				String nivel = palavras[2];
+				String nivel = palavras[3];
+                int ano = Integer.parseInt(palavras[2]);
 
-                Curso curso = new Curso();
-                Aluno aluno = this.cadastrar.listarAlunosFromCurso(idAluno);
+
+                Curso curso = new Curso(nome,nivel, ano);
+                Aluno aluno = this.cadastrar.getAlunoFromId(idAluno);
                 
-                cadastrar.adicionarCadastro(aluno, curso);
+                cadastrar.addRelacaoAlunoCurso(aluno, curso);
 
             }
 
@@ -76,14 +74,15 @@ public class Repository {
 
     }
 
-	private void loadAluno(){
+	private void loadAlunos(){
 
         try (   InputStream is = new FileInputStream(this.alunoPath);
                 InputStreamReader isr = new InputStreamReader(is, StandardCharsets.UTF_8);
                 BufferedReader br = new BufferedReader(isr);
             ){
             String linha;
-            int i=0;
+            
+
             while((linha = br.readLine()) != null){
 
                 String[] palavras = linha.split(",");
@@ -92,7 +91,7 @@ public class Repository {
                 String nome = palavras[1];
 
                 Aluno aluno = new Aluno(id, nome);
-                this.cadastrar.adicionarAluno(aluno);
+                this.cadastrar.addAlunos(aluno);
 
             }
 
@@ -102,24 +101,25 @@ public class Repository {
 
     }
 
-	private void loadCurso(){
+	private void loadCursos(){
 
         try (   InputStream is = new FileInputStream(this.cursoPath);
                 InputStreamReader isr = new InputStreamReader(is, StandardCharsets.UTF_8);
                 BufferedReader br = new BufferedReader(isr);
             ){
             String linha;
-            int i=0;
+        
+
             while((linha = br.readLine()) != null){
 
                 String[] palavras = linha.split(",");
 
                 String nivel = palavras[0];
                 String nome = palavras[1];
-                String ano = palavras[2];
-
+                int ano = Integer.parseInt(palavras[2]);
+                		
                 Curso curso = new Curso(nivel, nome, ano);
-                this.cadastrar.adicionarCurso(curso);
+                this.cadastrar.addCurso(curso);
 
             }
 
@@ -131,9 +131,9 @@ public class Repository {
 
 	
 	public void saveCadastro(Cadastro cadastroOutput){
-		
-		saveFuncionarios(cadastroOutput.listarAlunos());
-		saveCurso(cadastroOutput.listarCursos());
+	
+		saveAluno(cadastroOutput.getAluno());
+		saveCurso(cadastroOutput.getCurso());
 		saveRelacoes(cadastroOutput);
 
     }
@@ -144,7 +144,7 @@ public class Repository {
                 PrintWriter pw = new PrintWriter(osw, true);
                 ){
             for(Aluno aluno: cadastroOutput.getAluno()){
-                for(Curso curso: cadastroOutput.listarCursoFromAluno(curso.getNome())){
+                for(Curso curso: cadastroOutput.getCursoFromAluno(aluno.getId())){
                     pw.println(aluno.getId()+","+curso.getNome()+","+curso.getAno()+","+curso.getNivel());
                 }
             }

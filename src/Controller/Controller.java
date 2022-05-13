@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import Entidades.Aluno;
+import Entidades.Cadastro;
 import Entidades.Curso;
 import Repository.Repository;
 import View.View;
@@ -19,10 +20,12 @@ public class Controller {
 	
 	private View view;
 	private Repository repository;
+	private Cadastro cadastro;
 	
-	public Controller(View view, Repository repository) {
+	public Controller(View view, Cadastro cadastro, Repository repo) {
 		this.view = view;
-		this.repository = repository;
+		this.cadastro = cadastro;
+		this.repository = repo;
 	}
 	
 	public void init() {
@@ -45,17 +48,18 @@ public class Controller {
 	}
 
 	private void listarAlunos() {
-		view.listarAlunos(this.repository);
+		view.listarAlunos(this.cadastro);
 		
 	}
 
 	private void listarCursos() {
-		view.listarCursos(this.repository);
+		view.listarCursos(this.cadastro);
 		
 	}
 
 	private void adicionarAluno() {
-		view.adicionaAluno();
+		Aluno aluno = view.adicionaAluno();
+		this.cadastro.addAlunos(aluno);
 		
 	}
 	
@@ -64,26 +68,26 @@ public class Controller {
 	}
 	
 	private void listarAlunosFromCurso() {
-		Curso curso = view.getCursoFromLista(this.repository);
+		Curso curso = view.getCursoFromLista(this.cadastro);
 		if(curso == null)return;		
-		view.listarAlunosFromCursos(this.repository, null);
+		view.listarAlunosFromCursos(this.cadastro, null);
 	}
 	
 	private void listarCursoFromAluno() {
-		Aluno aluno = view.getAlunoFromLista(this.repository);
+		Aluno aluno = view.getAlunoFromLista(this.cadastro);
 		if(aluno == null) return;
-		view.listarCursosFromAluno(this.repository, aluno);
+		view.listarCursosFromAluno(this.cadastro, aluno);
 	}
 	
 	private void adicionaRelacao() {
-		Aluno aluno = view.getAlunoFromLista(this.repository);
+		Aluno aluno = view.getAlunoFromLista(this.cadastro);
 		if(aluno == null) return;
-		Curso curso = view.getCursoFromLista(this.repository);
+		Curso curso = view.getCursoFromLista(this.cadastro);
 		if(curso == null) return;
-		this.repository.adicionaRelacao(aluno, curso);
+		this.cadastro.addRelacaoAlunoCurso(aluno, curso);
 	}
 	
 	private void terminar() {
-		this.repository.saveCadastro();
+		this.repository.saveCadastro(cadastro);;
 	}
 }

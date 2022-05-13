@@ -2,7 +2,7 @@ package Entidades;
 
 import java.util.Objects;
 
-public class Aluno{
+public class Aluno {
 
 	private String id;
 	private String nome;
@@ -52,4 +52,5 @@ public class Aluno{
 				", nome='" + nome + '\'' +
 				'}';
 	}
+
 }

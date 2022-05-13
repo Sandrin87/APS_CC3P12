@@ -2,7 +2,7 @@ package Entidades;
 
 import java.util.Objects;
 
-public class Curso{
+public class Curso {
 	
 	private String nivel;
 	private String nome;
@@ -12,6 +12,10 @@ public class Curso{
 		this.nivel = nivel;
 		this.nome = nome;
         this.ano= ano;
+	}
+	
+	public Curso () {
+		
 	}
 	
 	public String getNivel() {

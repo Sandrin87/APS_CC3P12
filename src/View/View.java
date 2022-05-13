@@ -2,23 +2,24 @@ package View;
 
 import Controller.Opcao;
 import Entidades.Aluno;
+import Entidades.Cadastro;
 import Entidades.Curso;
-import Repository.Repository;
+
 
 public interface View {
 	
 	public Opcao menu();
 	
-	void listarAlunos(Repository repository);
-	void listarCursos(Repository repository);
+	void listarAlunos(Cadastro cadastro);
+	void listarCursos(Cadastro cadastro);
 	
 
-	void listarCursosFromAluno(Repository repository, Aluno aluno);
-	void listarAlunosFromCursos(Repository repository, Curso curso);
+	void listarCursosFromAluno(Cadastro cadastro, Aluno aluno);
+	void listarAlunosFromCursos(Cadastro cadastro, Curso curso);
 	
 	Aluno adicionaAluno();
 	Curso adicionaCurso();
 	
-	Curso getCursoFromLista(Repository repository);
-	Aluno getAlunoFromLista(Repository repository);
+	Curso getCursoFromLista(Cadastro cadastro);
+	Aluno getAlunoFromLista(Cadastro cadastro);
 }
