@@ -4,7 +4,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
-import java.util.Objects;
 
 
 public class Cadastro {
@@ -26,7 +25,7 @@ public class Cadastro {
     }
 
     public void addAlunos (Aluno _aluno){
-        this.aluno.put(_aluno, new TreeSet<>());
+        this.aluno.put(_aluno, null);
         this.listaAlunoPorId.put(_aluno.getId(), _aluno);
     }
 
