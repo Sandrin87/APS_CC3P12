@@ -5,19 +5,14 @@ import java.util.*;
 import Controller.Controller;
 import Controller.Opcao;
 import Entidades.Aluno;
+import Entidades.Cadastro;
 import Entidades.Curso;
 import Repository.Repository;
 
 public class ViewTerminal implements View {
 
-    private Repository repositorio;
 
-    public ViewTerminal(Repository repositorioCarregado) {
-
-        this.repositorio = repositorioCarregado;
-    }
-
-    @Override
+	@Override
     public Opcao menu() {
         try {
 
@@ -61,10 +56,10 @@ public class ViewTerminal implements View {
     }
 
     @Override
-    public Curso getCursoFromLista(Repository repository) {
+    public Curso getCursoFromLista(Cadastro cadastro) {
         System.out.println("Escolha um curso");
-        Curso curso = this.escolherCurso(repository);
-        if (!repository.getCursos().contains(curso)) {
+        Curso curso = this.escolherCurso(cadastro);
+        if (!cadastro.getCurso().contains(curso)) {
             System.out.println("Não encontramos um curso com essas informações");
             return null;
         }
@@ -72,13 +67,13 @@ public class ViewTerminal implements View {
     }
 
     @Override
-    public Aluno getAlunoFromLista(Repository repository) {
+    public Aluno getAlunoFromLista(Cadastro cadastro) {
         System.out.println("Entre com o id do Aluno: ");
-        listarAlunos(repository);
+        listarAlunos(cadastro);
         System.out.println("Entre com o id do Aluno: ");
         String id = getString();
 
-        Aluno aluno = repository.getAlunoFronId(id);
+        Aluno aluno = cadastro.getAlunoFromId(id);
         if(aluno==null){
             System.out.println("Não encontramos um aluno com esse id");
         }
@@ -87,13 +82,13 @@ public class ViewTerminal implements View {
     }
 
     @Override
-    public void listarAlunos(Repository repository) {
+    public void listarAlunos(Cadastro cadastro) {
         /**
          * Retorna todos alunos
          * alunoCSV precisa ser carregado a partir do database (repository)
          * */
 
-        Collection<Aluno> alunos = repositorio.getAllAlunos();
+        Collection<Aluno> alunos = cadastro.getAluno();
 
         System.out.println("Todos os alunos cadastrados: ");
 
@@ -103,31 +98,31 @@ public class ViewTerminal implements View {
     }
 
     @Override
-    public void listarCursos(Repository repository) {
+    public void listarCursos(Cadastro cadastro) {
         System.out.println("Todos os Cursos cadastrados: ");
-        for (Curso curso : repositorio.getAllCursos()) {
+        for (Curso curso : cadastro.getCurso()) {
             System.out.println(curso);
         }
     }
 
     @Override
-    public void listarCursosFromAluno(Repository repository, Aluno aluno) {
+    public void listarCursosFromAluno(Cadastro cadastro, Aluno aluno) {
         System.out.println("Todos os cursos do Aluno: " + aluno.getNome());
 
-        for (Curso curso : repository.getCursoFromAluno(aluno)) {
+        for (Curso curso : cadastro.getCursoFromAluno(aluno.getId())) {
             System.out.println(curso);
         }
 
     }
 
     @Override
-    public void listarAlunosFromCursos(Repository repository, Curso curso) {
+    public void listarAlunosFromCursos(Cadastro cadastro, Curso curso) {
         /**
          * Retorna uma lista de alunos que possuem o curso fornecido
          * */
         System.out.println("Todos os alunos do curso: " + curso.getNome());
 
-        for (Aluno aluno : repository.getAlunosFromCurso(curso)) {
+        for (Aluno aluno : cadastro.getAlunoFromCurso(curso)) {
             System.out.println(aluno);
         }
     }
@@ -173,7 +168,7 @@ public class ViewTerminal implements View {
         return getInt();
     }
 
-    private Curso escolherCurso(Repository repository) {
+    private Curso escolherCurso(Cadastro repository) {
         String nivel = escolherNivelCurso(repository);
         String nome = escolherNomeCurso(repository);
         int ano = escolherAnoCurso(repository);
@@ -181,9 +176,9 @@ public class ViewTerminal implements View {
 
     }
 
-    private String escolherNivelCurso(Repository repository) {
+    private String escolherNivelCurso(Cadastro cadastro) {
         Set<String> niveis = new TreeSet<>();
-        for(Curso c: repository.getCursos()){
+        for(Curso c: cadastro.getCurso()){
             niveis.add(c.getNivel());
         }
         System.out.println("Escolha um dos níveis: ");
@@ -194,9 +189,9 @@ public class ViewTerminal implements View {
         return getString();
     }
 
-    private String escolherNomeCurso(Repository repository) {
+    private String escolherNomeCurso(Cadastro cadastro) {
         Set<String> nomes = new TreeSet<>();
-        for(Curso c: repository.getCursos()){
+        for(Curso c: cadastro.getCurso()){
             nomes.add(c.getNome());
         }
         System.out.println("Escolha um dos nomes: ");
@@ -208,9 +203,9 @@ public class ViewTerminal implements View {
 
     }
 
-    private int escolherAnoCurso(Repository repository) {
+    private int escolherAnoCurso(Cadastro cadastro) {
         Set<Integer> anos = new TreeSet<>();
-        for(Curso c: repository.getCursos()) {
+        for(Curso c: cadastro.getCurso()) {
             anos.add(c.getAno());
         }
         System.out.println("Escolha um dos anos: ");

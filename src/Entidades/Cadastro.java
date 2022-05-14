@@ -25,32 +25,30 @@ public class Cadastro {
 
     }
 
-    public void addAlunos (Aluno aluno){
-        this.aluno.put(aluno, new TreeSet<>());
-        this.listaAlunoPorId.put(aluno.getId(aluno));
+    public void addAlunos (Aluno _aluno){
+        this.aluno.put(_aluno, new TreeSet<>());
+        this.listaAlunoPorId.put(_aluno.getId(), _aluno);
     }
 
     public Set<Curso> getCurso(){
         return curso.keySet();
     }
 
-    public void addCurso (Curso curso){
-        this.curso.put(curso, new TreeSet<>());
+    public void addCurso (Curso _curso){
+        this.curso.put(_curso, new TreeSet<>());
     }
 
     public Set<Curso> getCursoFromAluno(String id){
         return aluno.get(new Aluno(id, ""));
     }
 
-//Curso é objeto, o curso ele é a variável que vai armazenar o objeto// //o objeto tem que ter uma class com o msm nome do objeto//
-
-    public Set<Aluno> getAlunoFromCurso (Curso curso){ 
-        return curso.getCurso(curso);
+    public Set<Aluno> getAlunoFromCurso (Curso _curso){ 
+        return curso.get(_curso);
     }
 
-    public void addRelacaoAlunoCurso(Aluno aluno, Curso curso){
-        this.curso.get(curso).add(aluno);
-        this.aluno.get(aluno).add(curso);
+    public void addRelacaoAlunoCurso(Aluno _aluno, Curso _curso){
+        this.curso.get(_curso).add(_aluno);
+        this.aluno.get(_aluno).add(_curso);
     }
 
 

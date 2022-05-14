@@ -38,8 +38,8 @@ public class Repository {
 		
         this.cadastrar = new Cadastro();
         
-        loadFuncionarios();
-        loadDepartamentos();
+        loadAluno();
+        loadCurso();
         
         return loadRelacoes();
     }
@@ -61,10 +61,10 @@ public class Repository {
                 String ano = palavras[2];
 				String nivel = palavras[2];
 
-                Curso curso = new Curso();
-                Aluno aluno = this.cadastrar.listarAlunosFromCurso(idAluno);
+				Curso curso = new Curso(nivel, nome, Integer.parseInt(ano));
+                Aluno aluno = cadastrar.getAlunoFromId(idAluno);
                 
-                cadastrar.adicionarCadastro(aluno, curso);
+                cadastrar.addRelacaoAlunoCurso(aluno, curso);
 
             }
 
@@ -92,7 +92,7 @@ public class Repository {
                 String nome = palavras[1];
 
                 Aluno aluno = new Aluno(id, nome);
-                this.cadastrar.adicionarAluno(aluno);
+                this.cadastrar.addAlunos(aluno);
 
             }
 
@@ -118,8 +118,8 @@ public class Repository {
                 String nome = palavras[1];
                 String ano = palavras[2];
 
-                Curso curso = new Curso(nivel, nome, ano);
-                this.cadastrar.adicionarCurso(curso);
+                Curso curso = new Curso(nivel, nome, Integer.parseInt(ano));
+                this.cadastrar.addCurso(curso);
 
             }
 
@@ -132,8 +132,8 @@ public class Repository {
 	
 	public void saveCadastro(Cadastro cadastroOutput){
 		
-		saveFuncionarios(cadastroOutput.listarAlunos());
-		saveCurso(cadastroOutput.listarCursos());
+		saveAluno(cadastroOutput.getAluno());
+		saveCurso(cadastroOutput.getCurso());
 		saveRelacoes(cadastroOutput);
 
     }
@@ -144,7 +144,7 @@ public class Repository {
                 PrintWriter pw = new PrintWriter(osw, true);
                 ){
             for(Aluno aluno: cadastroOutput.getAluno()){
-                for(Curso curso: cadastroOutput.listarCursoFromAluno(curso.getNome())){
+                for(Curso curso: cadastroOutput.getCursoFromAluno(aluno.getId())){
                     pw.println(aluno.getId()+","+curso.getNome()+","+curso.getAno()+","+curso.getNivel());
                 }
             }
