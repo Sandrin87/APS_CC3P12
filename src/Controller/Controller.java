@@ -70,7 +70,7 @@ public class Controller {
 	private void listarAlunosFromCurso() {
 		Curso curso = view.getCursoFromLista(this.cadastro);
 		if(curso == null)return;		
-		view.listarAlunosFromCursos(this.cadastro, null);
+		view.listarAlunosFromCursos(this.cadastro, curso);
 	}
 	
 	private void listarCursoFromAluno() {
@@ -84,7 +84,7 @@ public class Controller {
 		if(aluno == null) return;
 		Curso curso = view.getCursoFromLista(this.cadastro);
 		if(curso == null) return;
-		this.cadastro.addRelacaoAlunoCurso(aluno, curso);
+		this.cadastro.addRelacao(aluno, curso);
 	}
 	
 	private void terminar() {

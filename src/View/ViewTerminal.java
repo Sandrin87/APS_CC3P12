@@ -16,7 +16,7 @@ public class ViewTerminal implements View {
     public Opcao menu() {
         try {
 
-            System.out.println("Escolha uma das opções");
+            System.out.println("Escolha uma das opcoes");
             for (Opcao o : Opcao.values()) {
                 System.out.println("" + o.codigo + " - " + o.descricao);
 
@@ -29,12 +29,12 @@ public class ViewTerminal implements View {
                 int opcaoCodigo = Integer.parseInt(entrada);
 
                 if (!Controller.opcoesByCodigos.keySet().contains(opcaoCodigo)) {
-                    throw new InputMismatchException("A opção escolhida não corresponde a nunhum código listado");
+                    throw new InputMismatchException("A opcao escolhida nao corresponde a nunhum codigo listado");
                 }
                 return Controller.opcoesByCodigos.get(opcaoCodigo);
 
             } catch (NumberFormatException e) {
-                throw new InputMismatchException("A opção de entranda não é um número inteiro");
+                throw new InputMismatchException("A opcao de entranda nao eh um numero inteiro");
             }
         } catch (InputMismatchException e) {
             System.out.println(e.getMessage());
@@ -57,10 +57,10 @@ public class ViewTerminal implements View {
 
     @Override
     public Curso getCursoFromLista(Cadastro cadastro) {
-        System.out.println("Escolha um curso");
+        System.out.println("Escolha um curso:\n");
         Curso curso = this.escolherCurso(cadastro);
         if (!cadastro.getCurso().contains(curso)) {
-            System.out.println("Não encontramos um curso com essas informações");
+            System.out.println("Nao encontramos um curso com essas informacoes");
             return null;
         }
         return curso;
@@ -75,7 +75,7 @@ public class ViewTerminal implements View {
 
         Aluno aluno = cadastro.getAlunoFromId(id);
         if(aluno==null){
-            System.out.println("Não encontramos um aluno com esse id");
+            System.out.println("Nao encontramos um aluno com esse id");
         }
 
         return aluno;
@@ -148,13 +148,13 @@ public class ViewTerminal implements View {
         System.out.println("Entre com os dados do curso: ");
         String nivel = getNivelCurso();
         String nome = getNomeCurso();
-        int ano = getAnoCurso();
+        String ano = getAnoCurso();
         return new Curso(nivel, nome, ano);
 
     }
 
     private String getNivelCurso() {
-        System.out.println("Qual o nível do curso: ");
+        System.out.println("Qual o nivel do curso: ");
         return getString();
     }
 
@@ -163,15 +163,15 @@ public class ViewTerminal implements View {
         return getString();
     }
 
-    private int getAnoCurso() {
+    private String getAnoCurso() {
         System.out.println("Qual o ano do curso: ");
-        return getInt();
+        return getString();
     }
 
-    private Curso escolherCurso(Cadastro repository) {
-        String nivel = escolherNivelCurso(repository);
-        String nome = escolherNomeCurso(repository);
-        int ano = escolherAnoCurso(repository);
+    private Curso escolherCurso(Cadastro cadastro) {
+        String nivel = escolherNivelCurso(cadastro);
+        String nome = escolherNomeCurso(cadastro);
+        String ano = escolherAnoCurso(cadastro);
         return new Curso(nivel, nome, ano);
 
     }
@@ -181,11 +181,11 @@ public class ViewTerminal implements View {
         for(Curso c: cadastro.getCurso()){
             niveis.add(c.getNivel());
         }
-        System.out.println("Escolha um dos níveis: ");
+        System.out.println("Escolha um dos niveis ");
         for(String nivel: niveis) {
             System.out.println(nivel);
         }
-        System.out.println("Digite o nível escolhido: ");
+        System.out.println("Digite o nivel que deseja: ");
         return getString();
     }
 
@@ -198,34 +198,28 @@ public class ViewTerminal implements View {
         for(String nome: nomes) {
             System.out.println(nome);
         }
-        System.out.println("Digite o nome escolhido: ");
+        System.out.println("Digite o nome desejado: ");
         return getString();
 
     }
 
-    private int escolherAnoCurso(Cadastro cadastro) {
-        Set<Integer> anos = new TreeSet<>();
+    private String escolherAnoCurso(Cadastro cadastro) {
+        Set<String> anos = new TreeSet<>();
         for(Curso c: cadastro.getCurso()) {
             anos.add(c.getAno());
         }
         System.out.println("Escolha um dos anos: ");
-        for(int ano: anos) {
+        for(String ano: anos) {
             System.out.println(ano);
         }
         System.out.println("Digite o ano escolhido: ");
-        return getInt();
+        return getString();
     }
 
     public String getString() {
         Scanner in = new Scanner(System.in);
         String str = in.nextLine();
         return str.trim();
-    }
-    
-    public int getInt() {
-        Scanner in = new Scanner(System.in);
-        int inteiro = in.nextInt();
-        return inteiro;
     }
 }
 

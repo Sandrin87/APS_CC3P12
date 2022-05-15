@@ -1,8 +1,8 @@
 package Entidades;
 
 import java.util.Objects;
-
-public class Aluno{
+ 
+public class Aluno implements Comparable<Aluno>{
 
 	private String id;
 	private String nome;
@@ -51,5 +51,10 @@ public class Aluno{
 				"id='" + id + '\'' +
 				", nome='" + nome + '\'' +
 				'}';
+	}
+
+	@Override
+	public int compareTo(Aluno o) {
+		return this.id.compareTo(o.id);
 	}
 }

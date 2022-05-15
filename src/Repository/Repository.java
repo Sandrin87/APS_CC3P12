@@ -26,7 +26,7 @@ public class Repository {
 
 	//csv's estão linkados na classe main então aqui ele só vai puxar
 	
-	private Cadastro cadastrar;
+	private Cadastro cadastrarInput;
 	
 	public Repository(String aAlunoPath, String aCursoPath, String aRelacaoPath) {
 		this.alunoPath = aAlunoPath;
@@ -36,7 +36,7 @@ public class Repository {
     
 	public Cadastro getCadastro(){
 		
-        this.cadastrar = new Cadastro();
+        this.cadastrarInput = new Cadastro();
         
         loadAluno();
         loadCurso();
@@ -51,28 +51,26 @@ public class Repository {
                 BufferedReader br = new BufferedReader(isr);
             ){
             String linha;
-            int i=0;
             while((linha = br.readLine()) != null){
 
                 String[] palavras = linha.split(",");
 
-                String idAluno = palavras[0];
+                String idAluno = palavras[0].substring(1);
                 String nome = palavras[1];
-                String ano = palavras[2];
 				String nivel = palavras[2];
+				String ano = palavras[3];
 
-				Curso curso = new Curso(nivel, nome, Integer.parseInt(ano));
-                Aluno aluno = cadastrar.getAlunoFromId(idAluno);
+				Curso curso = new Curso(nivel, nome, ano);
+				
+                Aluno aluno = this.cadastrarInput.getAlunoFromId(idAluno);
                 
-                cadastrar.addRelacaoAlunoCurso(aluno, curso);
-
+                this.cadastrarInput.addRelacao(aluno, curso);
             }
-
         }catch(IOException e){
             e.printStackTrace();
         }
         
-        return this.cadastrar; 
+        return this.cadastrarInput; 
 
     }
 
@@ -88,11 +86,11 @@ public class Repository {
 
                 String[] palavras = linha.split(",");
 
-                String id = palavras[0];
+                String id = palavras[0].substring(1);
                 String nome = palavras[1];
-
+                
                 Aluno aluno = new Aluno(id, nome);
-                this.cadastrar.addAlunos(aluno);
+                this.cadastrarInput.addAlunos(aluno);
 
             }
 
@@ -109,17 +107,16 @@ public class Repository {
                 BufferedReader br = new BufferedReader(isr);
             ){
             String linha;
-            int i=0;
             while((linha = br.readLine()) != null){
+            	
+            	String[] palavras = linha.split(",");
 
-                String[] palavras = linha.split(",");
-
-                String nivel = palavras[0];
+                String nivel = palavras[0].substring(1);
                 String nome = palavras[1];
                 String ano = palavras[2];
-
-                Curso curso = new Curso(nivel, nome, Integer.parseInt(ano));
-                this.cadastrar.addCurso(curso);
+                
+                Curso curso = new Curso(nivel, nome, ano);
+                this.cadastrarInput.addCurso(curso);
 
             }
 
@@ -187,6 +184,4 @@ public class Repository {
         }
 
     }
-
-
 }

@@ -2,20 +2,20 @@ package Entidades;
 
 import java.util.Objects;
 
-public class Curso{
+public class Curso implements Comparable<Curso>{
 	
 	private String nivel;
 	private String nome;
-    private int ano;
+    private String ano;
 	
-	public Curso (String nivel,String nome, int ano) {
+	public Curso (String nivel,String nome, String ano) {
 		this.nivel = nivel;
 		this.nome = nome;
         this.ano= ano;
 	}
 	
 	public String getNivel() {
-		return nivel;
+		return this.nivel;
 	}
 
     public String getNome() {
@@ -24,7 +24,7 @@ public class Curso{
     }
 
 
-    public int getAno() {
+    public String getAno() {
 		return this.ano;
 
     }
@@ -39,7 +39,7 @@ public class Curso{
 		this.nome = nome;
 	}
 
-    public void setAno(Integer ano) { 
+    public void setAno(String ano) { 
 		this.ano = ano;
 	}
 
@@ -65,5 +65,15 @@ public class Curso{
 				", nome='" + nome + '\'' +
 				", ano=" + ano +
 				'}';
+	}
+
+	@Override
+	public int compareTo(Curso o) {
+		if(!this.nivel.equals(o.nivel)) {
+			return this.nivel.compareTo(o.nivel);
+		}else if(!this.ano.equals(o.ano)) {
+			return this.ano.compareTo(o.ano);
+		}
+		return this.nome.compareTo(o.nome);
 	}
 }
