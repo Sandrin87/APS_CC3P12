@@ -1,13 +1,16 @@
 package View;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.TreeSet;
 
 import Controller.Controller;
 import Controller.Opcao;
 import Entidades.Aluno;
 import Entidades.Cadastro;
 import Entidades.Curso;
-import Repository.Repository;
 
 public class ViewTerminal implements View {
 
@@ -83,16 +86,8 @@ public class ViewTerminal implements View {
 
     @Override
     public void listarAlunos(Cadastro cadastro) {
-        /**
-         * Retorna todos alunos
-         * alunoCSV precisa ser carregado a partir do database (repository)
-         * */
-
-        Collection<Aluno> alunos = cadastro.getAluno();
-
         System.out.println("Todos os alunos cadastrados: ");
-
-        for (Aluno aluno : alunos) {
+        for (Aluno aluno : cadastro.getAluno()) {
             System.out.println(aluno);
         }
     }
