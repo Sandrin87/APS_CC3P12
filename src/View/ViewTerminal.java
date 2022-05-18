@@ -1,16 +1,13 @@
 package View;
 
-import java.util.Collection;
-import java.util.InputMismatchException;
-import java.util.Scanner;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 import Controller.Controller;
 import Controller.Opcao;
 import Entidades.Aluno;
 import Entidades.Cadastro;
 import Entidades.Curso;
+import Repository.Repository;
 
 public class ViewTerminal implements View {
 
@@ -84,7 +81,6 @@ public class ViewTerminal implements View {
     }
 
     @Override
-<<<<<<< HEAD
     public void listarAlunos(Cadastro _cadastro) {
         /**
          * Retorna todos alunos
@@ -93,11 +89,9 @@ public class ViewTerminal implements View {
 
         Collection<Aluno> alunos = _cadastro.getAlunos();
 
-=======
-    public void listarAlunos(Cadastro cadastro) {
->>>>>>> f069048825d622ad44fb8bcc7170bcdec46a6a99
         System.out.println("Todos os alunos cadastrados: ");
-        for (Aluno aluno : cadastro.getAluno()) {
+
+        for (Aluno aluno : alunos) {
             System.out.println(aluno);
         }
     }

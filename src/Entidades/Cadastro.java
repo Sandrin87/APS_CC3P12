@@ -1,23 +1,19 @@
 package Entidades;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 
 public class Cadastro {    
-<<<<<<< HEAD
     Map<Aluno, Set<Curso>> alunos = new TreeMap<>();//vetor aluno//
 	Map<Curso, Set<Aluno>> cursos = new TreeMap<>();
 
     Map<String, Aluno> listaDeAlunos = new TreeMap<>();
-=======
-    Map<Aluno, Set<Curso>> aluno = new HashMap<>();//vetor aluno//
-	Map<Curso, Set<Aluno>> curso = new HashMap<>();
-
-    Map<String, Aluno> listaAlunoPorId = new HashMap<>();
->>>>>>> f069048825d622ad44fb8bcc7170bcdec46a6a99
 
 
     public Aluno getAlunoFromId (String id){
@@ -52,15 +48,7 @@ public class Cadastro {
     }
 
     public void addRelacao(Aluno _aluno, Curso _curso){
-<<<<<<< HEAD
     	this.cursos.get(_curso).add(_aluno);
 		this.alunos.get(_aluno).add(_curso);
-=======
-    if(_aluno.getId() == null) {
-    	this.curso.get(_curso).add(_aluno);
-		this.aluno.get(_aluno).add(_curso);
-    	} 
-    	
->>>>>>> f069048825d622ad44fb8bcc7170bcdec46a6a99
     }
 }
