@@ -34,14 +34,13 @@ public class ViewTerminal implements View {
                 return Controller.opcoesByCodigos.get(opcaoCodigo);
 
             } catch (NumberFormatException e) {
-                throw new InputMismatchException("A opcao de entranda nao eh um numero inteiro");
+                throw new InputMismatchException("A opcao de entranda nao e um numero inteiro");
             }
         } catch (InputMismatchException e) {
             System.out.println(e.getMessage());
-            menu();
         }
 
-        return null;
+        return menu();
     }
 
 
@@ -56,10 +55,10 @@ public class ViewTerminal implements View {
     }
 
     @Override
-    public Curso getCursoFromLista(Cadastro cadastro) {
+    public Curso getCursoFromLista(Cadastro _cadastro) {
         System.out.println("Escolha um curso:\n");
-        Curso curso = this.escolherCurso(cadastro);
-        if (!cadastro.getCurso().contains(curso)) {
+        Curso curso = this.escolherCurso(_cadastro);
+        if (!_cadastro.getCursos().contains(curso)) {
             System.out.println("Nao encontramos um curso com essas informacoes");
             return null;
         }
@@ -67,13 +66,13 @@ public class ViewTerminal implements View {
     }
 
     @Override
-    public Aluno getAlunoFromLista(Cadastro cadastro) {
+    public Aluno getAlunoFromLista(Cadastro _cadastro) {
         System.out.println("Entre com o id do Aluno: ");
-        listarAlunos(cadastro);
+        listarAlunos(_cadastro);
         System.out.println("Entre com o id do Aluno: ");
         String id = getString();
 
-        Aluno aluno = cadastro.getAlunoFromId(id);
+        Aluno aluno = _cadastro.getAlunoFromId(id);
         if(aluno==null){
             System.out.println("Nao encontramos um aluno com esse id");
         }
@@ -82,13 +81,13 @@ public class ViewTerminal implements View {
     }
 
     @Override
-    public void listarAlunos(Cadastro cadastro) {
+    public void listarAlunos(Cadastro _cadastro) {
         /**
          * Retorna todos alunos
          * alunoCSV precisa ser carregado a partir do database (repository)
          * */
 
-        Collection<Aluno> alunos = cadastro.getAluno();
+        Collection<Aluno> alunos = _cadastro.getAlunos();
 
         System.out.println("Todos os alunos cadastrados: ");
 
@@ -98,31 +97,31 @@ public class ViewTerminal implements View {
     }
 
     @Override
-    public void listarCursos(Cadastro cadastro) {
+    public void listarCursos(Cadastro _cadastro) {
         System.out.println("Todos os Cursos cadastrados: ");
-        for (Curso curso : cadastro.getCurso()) {
+        for (Curso curso : _cadastro.getCursos()) {
             System.out.println(curso);
         }
     }
 
     @Override
-    public void listarCursosFromAluno(Cadastro cadastro, Aluno aluno) {
+    public void listarCursosFromAluno(Cadastro _cadastro, Aluno aluno) {
         System.out.println("Todos os cursos do Aluno: " + aluno.getNome());
 
-        for (Curso curso : cadastro.getCursoFromAluno(aluno.getId())) {
+        for (Curso curso : _cadastro.getCursoFromAluno(aluno.getId())) {
             System.out.println(curso);
         }
 
     }
 
     @Override
-    public void listarAlunosFromCursos(Cadastro cadastro, Curso curso) {
+    public void listarAlunosFromCursos(Cadastro _cadastro, Curso curso) {
         /**
          * Retorna uma lista de alunos que possuem o curso fornecido
          * */
         System.out.println("Todos os alunos do curso: " + curso.getNome());
 
-        for (Aluno aluno : cadastro.getAlunoFromCurso(curso)) {
+        for (Aluno aluno : _cadastro.getAlunoFromCurso(curso)) {
             System.out.println(aluno);
         }
     }
@@ -130,7 +129,7 @@ public class ViewTerminal implements View {
     public Aluno addNewAluno() {
         System.out.println("Entre com os dados do aluno: ");
         String id = getIdAluno();
-        String nome = getNomeAluno();
+        String nome = getNomeAluno();   
         return new Aluno(id, nome);
     }
 
@@ -149,8 +148,11 @@ public class ViewTerminal implements View {
         String nivel = getNivelCurso();
         String nome = getNomeCurso();
         String ano = getAnoCurso();
-        return new Curso(nivel, nome, ano);
-
+        if(nivel != null && nome != null && !ano.equals("0")) 
+        	return new Curso(nivel, nome, ano);
+        else
+        	return null;
+        
     }
 
     private String getNivelCurso() {
@@ -165,20 +167,20 @@ public class ViewTerminal implements View {
 
     private String getAnoCurso() {
         System.out.println("Qual o ano do curso: ");
-        return getString();
+        return String.valueOf(getInt());
     }
 
-    private Curso escolherCurso(Cadastro cadastro) {
-        String nivel = escolherNivelCurso(cadastro);
-        String nome = escolherNomeCurso(cadastro);
-        String ano = escolherAnoCurso(cadastro);
+    private Curso escolherCurso(Cadastro _cadastro) {
+        String nivel = escolherNivelCurso(_cadastro);
+        String nome = escolherNomeCurso(_cadastro);
+        String ano = escolherAnoCurso(_cadastro);
         return new Curso(nivel, nome, ano);
 
     }
 
-    private String escolherNivelCurso(Cadastro cadastro) {
+    private String escolherNivelCurso(Cadastro _cadastro) {
         Set<String> niveis = new TreeSet<>();
-        for(Curso c: cadastro.getCurso()){
+        for(Curso c: _cadastro.getCursos()){
             niveis.add(c.getNivel());
         }
         System.out.println("Escolha um dos niveis ");
@@ -189,9 +191,9 @@ public class ViewTerminal implements View {
         return getString();
     }
 
-    private String escolherNomeCurso(Cadastro cadastro) {
+    private String escolherNomeCurso(Cadastro _cadastro) {
         Set<String> nomes = new TreeSet<>();
-        for(Curso c: cadastro.getCurso()){
+        for(Curso c: _cadastro.getCursos()){
             nomes.add(c.getNome());
         }
         System.out.println("Escolha um dos nomes: ");
@@ -203,9 +205,9 @@ public class ViewTerminal implements View {
 
     }
 
-    private String escolherAnoCurso(Cadastro cadastro) {
+    private String escolherAnoCurso(Cadastro _cadastro) {
         Set<String> anos = new TreeSet<>();
-        for(Curso c: cadastro.getCurso()) {
+        for(Curso c: _cadastro.getCursos()) {
             anos.add(c.getAno());
         }
         System.out.println("Escolha um dos anos: ");
@@ -213,13 +215,24 @@ public class ViewTerminal implements View {
             System.out.println(ano);
         }
         System.out.println("Digite o ano escolhido: ");
-        return getString();
+        return String.valueOf(getInt());
     }
 
+    public int getInt() {
+		try {
+			Scanner input = new Scanner(System.in);
+	        int numeroInteiro = input.nextInt();
+	        return numeroInteiro;
+		}catch(Exception e) {
+			System.out.println("Digitação incorreta.");
+		}
+		return 0;
+    }
+    
     public String getString() {
-        Scanner in = new Scanner(System.in);
-        String str = in.nextLine();
-        return str.trim();
+        Scanner input = new Scanner(System.in);
+        String stringInput = input.nextLine();
+        return stringInput.trim();
     }
 }
 

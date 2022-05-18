@@ -22,9 +22,9 @@ public class Controller {
 	private Repository repository;
 	private Cadastro cadastro;
 	
-	public Controller(View view, Repository repository) {
-		this.view = view;
-		this.repository = repository;
+	public Controller(View _view, Repository _repository) {
+		this.view = _view;
+		this.repository = _repository;
 	}
 	
 	public void init() {
@@ -54,17 +54,20 @@ public class Controller {
 	}
 
 	private void listarCursos() {
-		view.listarCursos(this.cadastro);
-		
+		view.listarCursos(this.cadastro);		
 	}
 
 	private void adicionarAluno() {
-		view.adicionaAluno();
+		Aluno novoAluno = view.adicionaAluno();
+		if(novoAluno == null)return;
+		this.cadastro.addAluno(novoAluno);
 		
 	}
 	
 	private void adicionarCurso() {
-		view.adicionaCurso();
+		Curso novoCurso = view.adicionaCurso();
+		if(novoCurso == null)return;
+		this.cadastro.addCurso(novoCurso);
 	}
 	
 	private void listarAlunosFromCurso() {

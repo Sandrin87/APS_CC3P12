@@ -10,45 +10,45 @@ import java.util.TreeSet;
 
 
 public class Cadastro {    
-    Map<Aluno, Set<Curso>> aluno = new TreeMap<>();//vetor aluno//
-	Map<Curso, Set<Aluno>> curso = new TreeMap<>();
+    Map<Aluno, Set<Curso>> alunos = new TreeMap<>();//vetor aluno//
+	Map<Curso, Set<Aluno>> cursos = new TreeMap<>();
 
-    Map<String, Aluno> listaAlunoPorId = new TreeMap<>();
+    Map<String, Aluno> listaDeAlunos = new TreeMap<>();
 
 
     public Aluno getAlunoFromId (String id){
-        return listaAlunoPorId.get(id);
+        return listaDeAlunos.get(id);
 
     }
 
-    public Set<Aluno> getAluno(){ 
-        return aluno.keySet();
+    public Set<Aluno> getAlunos(){ 
+        return alunos.keySet();
 
     }
 
-    public void addAlunos (Aluno _aluno){
-        this.aluno.put(_aluno, new TreeSet<>());
-        this.listaAlunoPorId.put(_aluno.getId(), _aluno);
+    public void addAluno(Aluno _aluno){
+        this.alunos.put(_aluno, new TreeSet<>());
+        this.listaDeAlunos.put(_aluno.getId(), _aluno);
     }
 
-    public Set<Curso> getCurso(){
-    	return curso.keySet();
+    public Set<Curso> getCursos(){
+    	return cursos.keySet();
     }
 
     public void addCurso (Curso _curso){
-        this.curso.put(_curso, new TreeSet<>());
+        this.cursos.put(_curso, new TreeSet<>());
     }
 
     public Set<Curso> getCursoFromAluno(String id){
-        return aluno.get(new Aluno(id, ""));
+        return alunos.get(new Aluno(id, ""));
     }
 
-    public Set<Aluno> getAlunoFromCurso (Curso _curso){ 
-        return curso.get(_curso);
+    public Set<Aluno> getAlunoFromCurso(Curso _curso){ 
+        return cursos.get(_curso);
     }
 
     public void addRelacao(Aluno _aluno, Curso _curso){
-    	this.curso.get(_curso).add(_aluno);
-		this.aluno.get(_aluno).add(_curso);
+    	this.cursos.get(_curso).add(_aluno);
+		this.alunos.get(_aluno).add(_curso);
     }
 }

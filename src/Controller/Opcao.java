@@ -13,8 +13,8 @@ public enum Opcao {
 	public String descricao;
 	public int codigo;
 	
-	private Opcao(int codigo, String descricao) {
-		this.codigo = codigo;
-		this.descricao = descricao;
+	private Opcao(int _codigo, String _descricao) {
+		this.codigo = _codigo;
+		this.descricao = _descricao;
 	}
 }

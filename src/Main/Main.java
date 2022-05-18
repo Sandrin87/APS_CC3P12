@@ -14,9 +14,9 @@ public class Main {
 		String cursoPath = "database/Curso.csv";
 		String relacaoPath = "database/Cadastro.csv";
 		
-		Repository repo = new Repository(alunoPath, cursoPath, relacaoPath);
+		Repository repoistory = new Repository(alunoPath, cursoPath, relacaoPath);
 		
-		new Controller(view, repo).init();
+		new Controller(view, repoistory).init();
 		
 	}
 }
