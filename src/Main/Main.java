@@ -1,22 +1,20 @@
-package Main;
+package main;
 
-import Controller.Controller;
-import Entidades.Cadastro;
-import Repository.Repository;
-import View.View;
-import View.ViewTerminal;
+import controller.Controller;
+import repository.Repository;
+import view.View;
+import view.ViewTerminal;
 
-public class Main {
+class Main {
+	
 	public static void main(String[] args) {
-		
 		View view = new ViewTerminal();
-	    String alunoPath = "database/Aluno.csv" ;
-		String cursoPath = "database/Curso.csv";
-		String relacaoPath = "database/Cadastro.csv";
-		Cadastro cadastro = new Cadastro();
-		Repository repo = new Repository(alunoPath, cursoPath, relacaoPath);
+		String alunoPath = "database/aluno.csv";
+		String cursoPath = "database/cursos.csv";
+		String relacaoPath = "database/aluno_curso.csv";
+		Repository model = new Repository(alunoPath, cursoPath, relacaoPath);
 		
-		new Controller(view, cadastro, repo).init();
-		
+		new Controller(view, model).init();
 	}
+
 }

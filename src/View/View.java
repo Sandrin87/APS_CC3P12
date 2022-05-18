@@ -1,25 +1,25 @@
-package View;
+package view;
 
-import Controller.Opcao;
-import Entidades.Aluno;
-import Entidades.Cadastro;
-import Entidades.Curso;
-
+import controller.Opcao;
+import entidade.Cadastro;
+import entidade.Curso;
+import entidade.Aluno;
 
 public interface View {
 	
-	public Opcao menu();
+	Opcao menu();
 	
 	void listarAlunos(Cadastro cadastro);
 	void listarCursos(Cadastro cadastro);
 	
-
+	void listarAlunosFromCurso(Cadastro cadastro, Curso curso);
 	void listarCursosFromAluno(Cadastro cadastro, Aluno aluno);
-	void listarAlunosFromCursos(Cadastro cadastro, Curso curso);
 	
-	Aluno adicionaAluno();
-	Curso adicionaCurso();
-	
+	Curso addCurso();
+	Aluno addAluno();
+
 	Curso getCursoFromLista(Cadastro cadastro);
 	Aluno getAlunoFromLista(Cadastro cadastro);
+	
+
 }

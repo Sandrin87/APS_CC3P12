@@ -1,5 +1,0 @@
-tres arquivos:
-Aluno
-Curso
-AunoCurso
-idAluno e cursos
